@@ -22,22 +22,24 @@ export default class Level extends Phaser.Scene {
       this.combustible;
       this.meteorRatio;
       this.vidas;
+      this.puntuacion;
     }
   }
   init(data){
     this.combustible = data.combustible;
     this.meteorRatio = data.meteoros;
     this.vidas = data.vidas;
+    this.puntuacion = data.puntuacion;
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
     this.creaFisicas();
-    
-    console.log(this.combustible);
-    this.player = new Player(this, 125, 0);
     this.vidastext = this.add.text(10,10, "Lives: " + this.vidas).setScale(0.8);
+    this.puntuaciontext = this.add.text(150,10,"Score: " + this.puntuacion).setScale(0.8);
+    this.player = new Player(this, 125, 0);
+    
 
     this.fuel;
     this.spaceship = new Spaceship(this,200,160, this.combustible);
@@ -102,11 +104,17 @@ createFuel(){
     if(this.player.chargefuel()){
       this.spaceship.addfuel();
       this.createFuel();
+      this.modscore(+100);
     }
   }
 
   createlaser(dir){
     let laser = new Laser(this,this.player.getX(),this.player.getY(),dir,this.lasergroup);
+  }
+
+  modscore(mod){
+    this.puntuacion += mod;
+    this.puntuaciontext.text = "Score: " + this.puntuacion;
   }
 
   end(victory){
