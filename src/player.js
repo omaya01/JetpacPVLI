@@ -1,6 +1,6 @@
 
 /**
- * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
+ * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando wds.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
  */
 export default class Player extends Phaser.GameObjects.Sprite {
@@ -21,6 +21,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.isWalking=false;
     this.chargeAnimation();
     //this.loadSounds();
+
+    //reset de pos
+    this.resetX = x;
+    this.resetY = y;
+    this.invul = false;
 
     this.fuelgotted = this.scene.add.image(this.x, this.y - 20, 'fuel').setVisible(false);
     this.toroide = false;
@@ -108,6 +113,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.fuelgotted.setVisible(true);
       this.igotted=true;
     }
+  }
+
+  resetmepos(){
+    this.x = this.resetX;
+    this.y = this.resetY;
+    this.invul = true;
+
+    let timeinvul = this.scene.time.addEvent({delay:2000,callback:this.resetinvul(),callbackScope:this});
+  }
+
+  resetinvul(){
+    this.invul=false;
+  }
+
+  getinvul(){
+    return this.invul;
   }
 
   chargefuel(){

@@ -20,11 +20,13 @@ export default class Level extends Phaser.Scene {
     super({ key: 'level' });{
       this.combustible;
       this.meteorRatio;
+      this.vidas;
     }
   }
   init(data){
     this.combustible = data.combustible;
     this.meteorRatio = data.meteoros;
+    this.vidas = data.vidas;
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -32,6 +34,8 @@ export default class Level extends Phaser.Scene {
   create() {
     console.log(this.combustible);
     this.player = new Player(this, 125, 0);
+    this.vidastext = this.add.text(10,10, "Lives: " + this.vidas).setScale(0.8);
+
     this.fuel;
     this.spaceship = new Spaceship(this,200,160, this.combustible);
     this.createPlatfoms();
@@ -64,6 +68,12 @@ createFuel(){
 
   playergotfuel(){
     this.player.igotfuel();
+  }
+
+  playergothit(){
+    this.vidas--;
+    this.vidastext.text = "Lives: " + this.vidas;
+    return this.vidas === 0;
   }
  
   chargefuel(){

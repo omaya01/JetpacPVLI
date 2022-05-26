@@ -55,7 +55,11 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
       super.preUpdate(t,dt);
        if (this.scene.physics.overlap(this.scene.player, this)) {
          
-         this.scene.end(false);
+         if(!this.scene.player.getinvul()){
+          if(this.scene.playergothit()) this.scene.end(false);
+          else this.scene.player.resetmepos();
+         }
+         
          this.destroy();
         }
 

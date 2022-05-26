@@ -24,14 +24,14 @@
     }
     create(){
         this.easy.on('pointerdown', function (event) { 
-            this.scene.start('level',{combustible:2, meteoros: 2});
+            this.scene.start('level',{combustible:2, meteoros: 2, vidas:3});
           }, this);
         this.medium.on('pointerdown', function (event) { 
             
-            this.scene.start('level',{combustible:3, meteoros: 1});
+            this.scene.start('level',{combustible:3, meteoros: 1, vidas:3});
           }, this);
         this.hard.on('pointerdown', function (event) { 
-            this.scene.start('level',{combustible:5, meteoros: 0.5});
+            this.scene.start('level',{combustible:5, meteoros: 0.5, vidas:3});
           }, this);
     }
 
