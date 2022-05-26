@@ -7,15 +7,13 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
      */
-    constructor(scene, x, y,terrain) {
+    constructor(scene, x, y,group) {
       super(scene, x, y, '');
       this.scene.add.existing(this);
   
       //Le mete físicas al objeto
+      group.add(this);
       this.scene.physics.add.existing(this);
-      terrain.forEach(element => {
-        this.scene.physics.add.collider(this,element,this.destroymeself, function name(params) {}, this);
-      });
       
       this.speedX = 100;
       this.speedY = 10;
@@ -43,18 +41,13 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
       this.direction1 =(Phaser.Math.Between(-10, 10));
       this.direction1/=10;
     }
-
-    destroymeself(){
-      this.destroy();
-     // this.scene.sound.play('explosion');
-    }
     
     preUpdate(t,dt) {
       // IMPORTANTE: Si no ponemos esta instrucción y el sprite está animado
       // no se podrá ejecutar la animación del sprite. 
       super.preUpdate(t,dt);
        if (this.scene.physics.overlap(this.scene.player, this)) {
-         
+
          if(!this.scene.player.getinvul()){
           if(this.scene.playergothit()) this.scene.end(false);
           else this.scene.player.resetmepos();

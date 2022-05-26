@@ -3,6 +3,7 @@ import Player from './player.js';
 import Coin from './coin.js';
 import Spaceship from './spaceship.js';
 import Meteor from './meteor.js';
+import Laser from './laser.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -32,6 +33,8 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    this.creaFisicas();
+    
     console.log(this.combustible);
     this.player = new Player(this, 125, 0);
     this.vidastext = this.add.text(10,10, "Lives: " + this.vidas).setScale(0.8);
@@ -44,9 +47,29 @@ export default class Level extends Phaser.Scene {
     let meteMeteoro = this.time.addEvent({ delay: this.meteorRatio * 1000, callback: this.createmeteor, callbackScope: this, loop: true });
   }
 
+  creaFisicas(){
+    //grupos de fisicas
+    this.lasergroup = this.add.group();
+    this.terrain = this.add.group();
+    this.meteorgroup = this.add.group();
+      
+    //creacion de fisicas
+    this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
+    this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {}, this);
+    this.physics.add.collider(this.meteorgroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
+  }
+
+  destroyonlythyself(obj1){
+    obj1.destroy();
+  }
+  destroythyself(obj1,obj2){
+    obj1.destroy();
+    obj2.destroy();
+  }
+
   createmeteor(){
     let meteorX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-new Meteor(this, meteorX, -10,this.terrain.children.entries);
+new Meteor(this, meteorX, -10,this.meteorgroup);
   }
 
 createFuel(){
@@ -56,7 +79,6 @@ createFuel(){
 }
 
   createPlatfoms(){
-    this.terrain = this.add.group();
       new Platform(this,129,188, 20, this.terrain); //suelo
 
       //plataformas
@@ -81,6 +103,10 @@ createFuel(){
       this.spaceship.addfuel();
       this.createFuel();
     }
+  }
+
+  createlaser(dir){
+    let laser = new Laser(this,this.player.getX(),this.player.getY(),dir,this.lasergroup);
   }
 
   end(victory){

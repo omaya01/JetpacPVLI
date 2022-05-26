@@ -55,6 +55,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
 
+    //movimiento
     if (this.keyW.isDown) {
       console.log()
       this.body.setVelocityY(this.jumpSpeed);
@@ -82,6 +83,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.play('playerWalk')
       this.stop();
       this.body.setVelocityX(0);
+    }
+
+    if(this.space.isDown){
+      this.scene.createlaser(this.getLaserDir());
     }
     
 
@@ -138,6 +143,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
       return true;
     }
     else return false;
+  }
+
+  getX(){return this.x;}
+  getY(){return this.y;}
+
+  getLaserDir(){
+    if(this.flipX)return -1;
+    else return 1;
   }
 }
 
