@@ -13,27 +13,26 @@ El menú final aparece cuando la partida termina. Tiene dos aspectos: de derrota
 ### Movimiento
 El movimiento del personaje se realizará con A y D para el movimiento horizontal. El movimiento horizontal es toroidal lo cual quiere decir que si se avanza lo suficiente por uno de los lados de la pantalla se aparece por el otro. 
 ### Jetpac
-El movimiento vertical se realiza con el espacio. Visualmente el movimiento se realiza gracias a un jetpac. Hay que mantener pulsado para activar el jetpac y una vez se deja de pulsar el espacio este se desactiva dejando caer al personaje. No hay límite de cuan alto el personaje puede llegar. No hay daño de caída.
+El movimiento vertical se realiza con la tecla W. Visualmente el movimiento se realiza gracias a un jetpac. Hay que mantener pulsado para activar el jetpac y una vez se deja de pulsar el espacio este se desactiva dejando caer al personaje. No hay límite de cuan alto el personaje puede llegar. No hay daño de caída.
 ### Escape del planeta
 El paso de nivel se produce cuando la nave esté completamente reparada y se haya metido en esta suficiente combustible. Estas mecánicas se explican abajo.
 #### Reparación
-La reparación de la nave se realiza llevando las piezas que aparecen al comienzo del nivel hasta la nave. Estas piezas son siempre tres en el primer nivel que se juegue.
-Cuando se comienza un nuevo nivel que no es el primero hay una posibilidad entre cuatro de que la nave se rompa. En este caso aparecerá una pieza de la nave en el escenario y la reparación de la nave bajará un nivel.
-La destrucción de la nave o la falta de destrucción de la nave al empezar un nuevo nivel que no sea el primero se verá indicada por un sonido característico representando un aterrizaje forzoso.
+La reparación de la nave se realiza llevando las piezas que aparecen al comienzo del nivel hasta la nave. Este número de piezas es dependiente de la dificultad y 
+aparecen al principio de cada nivel.
 #### Combustible
 Una vez la nave esté reparada aparecerá en el nivel un paquete de combustible. Cuando este sea entregado en la nave aparecerá otro. El combustible seguirá apareciendo hasta que la nave esté totalmente cargada con combustible.
 ### Pistola láser
-El personaje puede disparar un láser en la dirección donde esté el ratón. Para indicar esto el cursor tendrá la forma de una mira. Este láser destruirá meteoritos y matará enemigos en contacto. Se dispara con el click izquierdo del ratón.
+El personaje puede disparar un láser en la dirección donde esté mirando. Este láser se dispara con el espacio. El láser destruirá meteoritos y matará enemigos en contacto.
 ### Vida y muerte
 El jugador tiene tres vidas. Cada vez que que pierda una vida su posición se reiniciará a la del comienzo del nivel y ganará dos segundos de invulnerabilidad. Al perder la tercera vida el juego termina y se carga la pantalla de final con el aspecto de derrota.
 ### Aliens
 Los enemigos aparecen en intervalos de tiempo cada vez más pequeños dependiendo del nivel. Todos los enemigos matarán al jugador en contacto, restando una vida. Todos los enemigos aparecen por los laterales y tienen movimiento toroidal.
-#### Pompas
-Las pompas son esferas que irán rebotando por el escenario. Su color será aleatorio entre rojo, azul y verde. Estos enemigos aparecen en el tercer nivel.
-#### Halcones
-Los halcones son objetos voladores que mantienen su altura durante todo su recorrido. Tienen una velocidad relativamente alta. Su color será aleatorio entre rojo y verde. Estos enemigos aparecen en el segundo nivel.
 #### Setas
 Las setas son objetos con físicas muy parecidas al jugador. Andarán por el suelo yendo siempre en la misma dirección.  Su color es siempre rojo. Estos enemigos aparecen en el primer nivel.
+#### Halcones
+Los halcones son objetos voladores que mantienen su altura durante todo su recorrido. Tienen una velocidad relativamente alta. Su color será aleatorio entre rojo y verde. Estos enemigos aparecen en el segundo nivel.
+#### Pompas
+Las pompas son esferas que irán rebotando por el escenario. Su color será aleatorio entre rojo, azul y verde. Estos enemigos aparecen en el tercer nivel.
 ### Meteoritos
 Los meteoritos salen siempre en el mismo intervalo de tiempo desde el techo del nivel. Los meteoritos matan al jugador en contacto, restando una vida. Su velocidad es siempre la misma. Siempre aparecen de color blanco.
 ### Recursos
@@ -41,6 +40,4 @@ Los recursos aparecen siempre en el mismo intervalo de tiempo. Aparecen desde el
 ### Mundos
 Los tres mundos tendrán tres plataformas. Cada plataforma está a una altura distinta pero las alturas son constantes entre niveles. 
 El primer nivel será: media, baja, alta. El segundo nivel será: baja, alta, media. El tercer nivel será: alta, media, baja.
-La nave y el jugador siempre aparecen en los mismo puntos independientemente del nivel.
-
-## Dinámica
+La nave y el jugador siempre aparecen en los mismos puntos independientemente del nivel.
