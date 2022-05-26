@@ -1,5 +1,5 @@
 
-export default class Laser extends Phaser.GameObjects.Sprite {
+export default class Diamante extends Phaser.GameObjects.Sprite {
   
     /**
      * Constructor del jugador
@@ -7,26 +7,30 @@ export default class Laser extends Phaser.GameObjects.Sprite {
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
      */
-    constructor(scene, x, y,dir,group) {
+    constructor(scene, x, y,group) {
       super(scene, x, y, '');
+      //Le mete físicas al objeto
       group.add(this);
       this.scene.add.existing(this);
-  
+      
       this.scene.physics.add.existing(this);
       
-      this.speedX = 100;
-      this.body.velocity.set(this.speedX*dir, 0);
-      this.body.setAllowGravity(false);
+      this.body.velocity.set(0, 0);
       
       this.toroide = false;
     }
-    
+
     preUpdate(t,dt) {
       // IMPORTANTE: Si no ponemos esta instrucción y el sprite está animado
       // no se podrá ejecutar la animación del sprite. 
       super.preUpdate(t,dt);
-       
-      if(!this.toroide && this.x > 260){
+        
+      if (this.scene.physics.overlap(this.scene.player, this)) {
+          this.scene.modscore(+500);
+this.destroy();
+       }
+
+        if(!this.toroide && this.x > 260){
           this.x=0;
           this.toroide=true;
         }
@@ -36,5 +40,4 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         }
         else if(this.toroide && this.x > 0) this.toroide=false;
     }
-
   }

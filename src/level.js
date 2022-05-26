@@ -4,6 +4,7 @@ import Coin from './coin.js';
 import Spaceship from './spaceship.js';
 import Meteor from './meteor.js';
 import Laser from './laser.js';
+import Diamante from './diamante.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -47,6 +48,7 @@ export default class Level extends Phaser.Scene {
     this.createFuel();
 
     let meteMeteoro = this.time.addEvent({ delay: this.meteorRatio * 1000, callback: this.createmeteor, callbackScope: this, loop: true });
+    let diamante = this.time.addEvent({delay: 10000,callback:this.creatediamond,callbackScope:this,loop:true});
   }
 
   creaFisicas(){
@@ -54,11 +56,13 @@ export default class Level extends Phaser.Scene {
     this.lasergroup = this.add.group();
     this.terrain = this.add.group();
     this.meteorgroup = this.add.group();
+    this.diamantegroup = this.add.group();
       
     //creacion de fisicas
     this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
     this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {}, this);
     this.physics.add.collider(this.meteorgroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
+    this.physics.add.collider(this.diamantegroup, this.terrain);
   }
 
   destroyonlythyself(obj1){
@@ -72,6 +76,11 @@ export default class Level extends Phaser.Scene {
   createmeteor(){
     let meteorX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
 new Meteor(this, meteorX, -10,this.meteorgroup);
+  }
+
+  creatediamond(){
+    let diamondX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+    new Diamante(this, diamondX, 0, this.diamantegroup);
   }
 
 createFuel(){
