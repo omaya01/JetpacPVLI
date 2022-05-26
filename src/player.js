@@ -50,12 +50,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
 
-    if (this.space.isDown) {
+    if (this.keyW.isDown) {
       console.log()
       this.body.setVelocityY(this.jumpSpeed);
       //this.jump.play();
     }
-    if (this.cursors.left.isDown) {
+    if (this.keyA.isDown) {
       this.body.setVelocityX(-this.speed);
       if(!this.isWalking){
         this.play('playerWalk');
@@ -63,7 +63,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
       this.flipX=true;
     }
-    else if (this.cursors.right.isDown) {
+    else if (this.keyD.isDown) {
       this.body.setVelocityX(this.speed);
       
       if(!this.isWalking){
@@ -96,7 +96,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   
   createKeys(){
 
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
+    this.keyA=this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyD=this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.keyW=this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.space=this.scene. input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
   }

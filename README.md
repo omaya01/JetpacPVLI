@@ -2,6 +2,7 @@
 
 ## Mecánica
 ### Menús
+
 #### Menú principal
 Un menú principal con cuatro botones: 
 * Nuevo juego: si se pulsa este botón el juego comienza en el nivel 1 y se va avanzando de forma lineal por los tres niveles.
