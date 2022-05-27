@@ -5,9 +5,8 @@
 
 #### Menú principal
 Un menú principal con cuatro botones: 
-* Nuevo juego: si se pulsa este botón el juego comienza en el nivel 1 y se va avanzando de forma lineal por los tres niveles.
-* Nivel 1: si se pulsa este botón el juego carga el primer nivel y al completarlo se carga el menú de victoria o derrota.
-* Nivel 2: si se pulsa este botón el juego carga el segundo nivel y al completarlo se carga el menú de victoria o derrota.
+* Nivel 1: si se pulsa este botón el juego carga el primer nivel y al completarlo se pasará al siguiente nivel pudiendo jugar el juego de forma lineal.
+* Nivel 2: si se pulsa este botón el juego carga el segundo nivel y al completarlo se pasará al siguiente nivel pudiendo jugar el juego de forma lineal.
 * Nivel 3: si se pulsa este botón el juego carga el tercer nivel y al completarlo se carga el menú de victoria o derrota.
 #### Menú final
 El menú final aparece cuando la partida termina. Tiene dos aspectos: de derrota y de victoria. En ambos aspectos se escribirá la puntuación obtenida.

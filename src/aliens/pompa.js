@@ -1,5 +1,5 @@
 
-export default class Halcon extends Phaser.GameObjects.Sprite {
+export default class Pompa extends Phaser.GameObjects.Sprite {
   
     /**
      * Constructor del jugador
@@ -7,15 +7,18 @@ export default class Halcon extends Phaser.GameObjects.Sprite {
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
      */
-    constructor(scene, x, y) {
+    constructor(scene, x, y,group) {
       super(scene, x, y, '');
       //Le mete físicas al objeto
+      group.add(this);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this);
 
       this.body.setAllowGravity(false);
+      this.body.setBounce(1,1);
+      this.body.setCircle(15);
       
-      this.body.velocity.set(160, 0);
+      this.body.velocity.set(75, 75);
       
       this.toroide = false;
     }
@@ -43,5 +46,7 @@ export default class Halcon extends Phaser.GameObjects.Sprite {
         this.toroide=true;
       }
       else if(this.toroide && this.x > 0) this.toroide=false;
+
+      if(this.y <= 0)this.body.velocity.set(this.body.velocity.x, -this.body.velocity.y);
     }
   }
