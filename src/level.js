@@ -21,6 +21,7 @@ export default class Level extends Phaser.Scene {
    */
   constructor() {
     super({ key: 'level' });{
+      this.nivel;
       this.combustible;
       this.meteorRatio;
       this.vidas;
@@ -28,6 +29,7 @@ export default class Level extends Phaser.Scene {
     }
   }
   init(data){
+    this.nivel = data.nivel;
     this.combustible = data.combustible;
     this.meteorRatio = data.meteoros;
     this.vidas = data.vidas;
@@ -98,9 +100,19 @@ createFuel(){
       new Platform(this,129,188, 20, this.terrain); //suelo
 
       //plataformas
-      new Platform(this,115,120,2, this.terrain);
-      new Platform(this,40,100,2, this.terrain);
-      new Platform(this,230,50,2, this.terrain);
+      let firstY, secondY, thirdY;
+      if(this.nivel === 1){
+firstY = 100; secondY = 50; thirdY = 120;
+      }
+      else if(this.nivel === 2){
+firstY = 50; secondY = 120; thirdY = 100;
+      }
+      else if(this.nivel === 3){
+firstY = 120; secondY = 100; thirdY = 50;
+      }
+      new Platform(this,115,firstY,2, this.terrain);
+      new Platform(this,40,secondY,2, this.terrain);
+      new Platform(this,230,thirdY,2, this.terrain);
     
   }
 
