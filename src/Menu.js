@@ -24,14 +24,14 @@
     }
     create(){
         this.easy.on('pointerdown', function (event) { 
-            this.scene.start('level',{nivel:1, combustible:1, meteoros: 2, vidas:3, puntuacion:0});
+            this.scene.start('level',{nivel:1, combustible:1, aliens: 3, vidas:3, puntuacion:0});
           }, this);
         this.medium.on('pointerdown', function (event) { 
             
-            this.scene.start('level',{nivel:2, combustible:2, meteoros: 1, vidas:3, puntuacion:0});
+            this.scene.start('level',{nivel:2, combustible:2, aliens: 2, vidas:3, puntuacion:0});
           }, this);
         this.hard.on('pointerdown', function (event) { 
-            this.scene.start('level',{nivel:3, combustible:3, meteoros: 0.5, vidas:3, puntuacion:0});
+            this.scene.start('level',{nivel:3, combustible:3, aliens: 1, vidas:3, puntuacion:0});
           }, this);
     }
 

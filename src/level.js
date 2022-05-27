@@ -6,6 +6,7 @@ import Meteor from './meteor.js';
 import Laser from './laser.js';
 import Diamante from './diamante.js';
 import ShipPart from './shippart.js';
+import Seta from './aliens/seta.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -23,7 +24,7 @@ export default class Level extends Phaser.Scene {
     super({ key: 'level' });{
       this.nivel;
       this.combustible;
-      this.meteorRatio;
+      this.alienRatio;
       this.vidas;
       this.puntuacion;
     }
@@ -31,7 +32,7 @@ export default class Level extends Phaser.Scene {
   init(data){
     this.nivel = data.nivel;
     this.combustible = data.combustible;
-    this.meteorRatio = data.meteoros;
+    this.alienRatio = data.aliens;
     this.vidas = data.vidas;
     this.puntuacion = data.puntuacion;
   }
@@ -48,8 +49,10 @@ export default class Level extends Phaser.Scene {
     this.createPlatfoms();
     this.createshippart();
 
-    let meteMeteoro = this.time.addEvent({ delay: this.meteorRatio * 1000, callback: this.createmeteor, callbackScope: this, loop: true });
+    let meteMeteoro = this.time.addEvent({ delay: 2000, callback: this.createmeteor, callbackScope: this, loop: true });
     let diamante = this.time.addEvent({delay: 10000,callback:this.creatediamond,callbackScope:this,loop:true});
+    let alienspawn = this.time.addEvent({delay:this.alienRatio*1000,callback:this.createaliens,callbackScope:this,loop:true});
+
   }
 
   creaFisicas(){
@@ -58,11 +61,14 @@ export default class Level extends Phaser.Scene {
     this.terrain = this.add.group();
     this.meteorgroup = this.add.group();
     this.drops = this.add.group();
+    this.aliengroup = this.add.group();
       
     //creacion de fisicas
     this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
     this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {}, this);
+    this.physics.add.collider(this.lasergroup, this.aliengroup,this.destroythyself,function name(params){},this);
     this.physics.add.collider(this.meteorgroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
+    this.physics.add.collider(this.aliengroup, this.terrain);
     this.physics.add.collider(this.drops, this.terrain);
   }
 
@@ -79,6 +85,19 @@ export default class Level extends Phaser.Scene {
 new Meteor(this, meteorX, -10,this.meteorgroup);
   }
 
+  createaliens(){
+    if(this.nivel === 1){
+      let setaX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+      new Seta(this, setaX, -10,this.aliengroup);
+    }
+    else if(this.nivel === 2){
+
+    }
+    else if(this.nivel === 3){
+
+    }
+  }
+
   creatediamond(){
     let diamondX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
     new Diamante(this, diamondX, 0, this.drops);
@@ -86,14 +105,13 @@ new Meteor(this, meteorX, -10,this.meteorgroup);
 
   createshippart(){
     let partX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-    let partY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
-    let shipPart = new ShipPart(this,partX,partY,this.drops);
+    new ShipPart(this,partX,-10,this.drops);
   }
 
 createFuel(){
   let fuelX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
   let fuelY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
-  let fuel = new Coin(this,fuelX,fuelY, this.terrain.children.entries);
+  new Coin(this,fuelX,fuelY, this.terrain.children.entries);
 }
 
   createPlatfoms(){

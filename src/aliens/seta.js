@@ -1,5 +1,5 @@
 
-export default class Diamante extends Phaser.GameObjects.Sprite {
+export default class Seta extends Phaser.GameObjects.Sprite {
   
     /**
      * Constructor del jugador
@@ -12,10 +12,9 @@ export default class Diamante extends Phaser.GameObjects.Sprite {
       //Le mete físicas al objeto
       group.add(this);
       this.scene.add.existing(this);
-      
       this.scene.physics.add.existing(this);
       
-      this.body.velocity.set(0, 0);
+      this.body.velocity.set(25, 0);
       
       this.toroide = false;
     }
@@ -26,9 +25,23 @@ export default class Diamante extends Phaser.GameObjects.Sprite {
       super.preUpdate(t,dt);
         
       if (this.scene.physics.overlap(this.scene.player, this)) {
-          this.scene.modscore(+500);
-this.destroy();
+
+        if(!this.scene.player.getinvul()){
+         if(this.scene.playergothit()) this.scene.end(false);
+         else this.scene.player.resetmepos();
+        }
+        
+        this.destroy();
        }
 
+       if(!this.toroide && this.x > 260){
+        this.x=0;
+        this.toroide=true;
+      }
+      else if(!this.toroide && this.x < -5){
+        this.x=250;
+        this.toroide=true;
+      }
+      else if(this.toroide && this.x > 0) this.toroide=false;
     }
   }
