@@ -157,11 +157,18 @@ firstY = 120; secondY = 100; thirdY = 50;
 
   end(victory){
     if(victory){
-this.sound.play('win');
-    }else{
-this.sound.play('lose');
+      if(this.nivel < 3){
+        this.scene.start('level',{nivel:this.nivel+1, combustible:this.combustible+1, meteoros: 2, vidas:this.vidas, puntuacion:this.puntuacion});
+      }
+      else{
+        this.sound.play('win');
+        this.scene.start('menu');
+      }
     }
-    this.scene.start('menu');
+    else{
+      this.sound.play('lose');
+      this.scene.start('menu');
+    }
   }
 }
 
