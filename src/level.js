@@ -7,6 +7,7 @@ import Laser from './laser.js';
 import Diamante from './diamante.js';
 import ShipPart from './shippart.js';
 import Seta from './aliens/seta.js';
+import Halcon from './aliens/halcon.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -91,7 +92,8 @@ new Meteor(this, meteorX, -10,this.meteorgroup);
       new Seta(this, setaX, -10,this.aliengroup);
     }
     else if(this.nivel === 2){
-
+      let halconX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+      new Halcon(this,0,halconX,this.aliengroup);
     }
     else if(this.nivel === 3){
 
