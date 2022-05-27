@@ -18,8 +18,7 @@ El movimiento vertical se realiza con la tecla W. Visualmente el movimiento se r
 ### Escape del planeta
 El paso de nivel se produce cuando la nave esté completamente reparada y se haya metido en esta suficiente combustible. Estas mecánicas se explican abajo.
 #### Reparación
-La reparación de la nave se realiza llevando las piezas que aparecen al comienzo del nivel hasta la nave. Este número de piezas es dependiente de la dificultad y 
-aparecen al principio de cada nivel.
+La reparación de la nave se realiza llevando las piezas que aparecen al comienzo del nivel hasta la nave. Este número de piezas es siempre el mismo y aparecen al principio del nivel.
 #### Combustible
 Una vez la nave esté reparada aparecerá en el nivel un paquete de combustible. Cuando este sea entregado en la nave aparecerá otro. El combustible seguirá apareciendo hasta que la nave esté totalmente cargada con combustible.
 ### Pistola láser

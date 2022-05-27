@@ -27,9 +27,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.resetY = y;
     this.invul = false;
 
+    //fuel
     this.fuelgotted = this.scene.add.image(this.x, this.y - 20, 'fuel').setVisible(false);
     this.toroide = false;
     this.igotted = false;
+
+    //pieza
+    this.piezagotted = this.scene.add.image(this.x,this.y-20,'').setVisible(false);
+    this.ipgotted = false;
   }
   chargeAnimation(){
     this.playerAnimation=this.anims.create({
@@ -102,6 +107,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.fuelgotted.x=this.x;
       this.fuelgotted.y=this.y-20;
+      this.piezagotted.x=this.x;
+      this.piezagotted.y=this.y-20;
   }
   
   createKeys(){
@@ -117,6 +124,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if(!this.igotted){
       this.fuelgotted.setVisible(true);
       this.igotted=true;
+    }
+  }
+
+  igotpieza(){
+    if(!this.ipgotted){
+      this.piezagotted.setVisible(true);
+      this.ipgotted=true;
     }
   }
 
@@ -140,6 +154,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if(this.igotted===true){
       this.fuelgotted.setVisible(false);
       this.igotted=false;
+      return true;
+    }
+    else return false;
+  }
+
+  addpieza(){
+    if(this.ipgotted===true){
+      this.piezagotted.setVisible(false);
+      this.ipgotted=false;
       return true;
     }
     else return false;

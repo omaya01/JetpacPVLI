@@ -18,8 +18,10 @@
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
 
+      this.repaired = false; this.piezasneeded = 3; this.actualpiezas = 0;
+
       this.fuelcharged = 0; this.fuelneeded = fuelneeded;
-      this.fueltext = this.scene.add.text(this.x - 10,this.y-40, this.fuelcharged + "/" + this.fuelneeded).setScale(0.8);
+      this.fueltext = this.scene.add.text(this.x - 10,this.y-40, "").setScale(0.8);
     }
 
     /**
@@ -31,7 +33,8 @@
       // no se podrá ejecutar la animación del sprite.
       super.preUpdate();
       if (this.scene.physics.overlap(this.scene.player, this)) {
-        this.scene.chargefuel();
+        if(this.repaired) this.scene.chargefuel();
+        else this.scene.addpieza();
       }
     }
 
@@ -41,4 +44,14 @@
 this.scene.sound.play('drop');
       if(this.fuelcharged === this.fuelneeded) this.scene.end(true);
     }
+
+    addpart(){
+      this.actualpiezas +=1;
+      if(this.actualpiezas===this.piezasneeded){
+        this.repaired=true;
+        this.fueltext.text = this.fuelcharged + "/" + this.fuelneeded;
+      }
+    }
+
+    getrepaired(){return this.repaired;}
   }

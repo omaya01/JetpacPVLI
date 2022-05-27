@@ -5,6 +5,7 @@ import Spaceship from './spaceship.js';
 import Meteor from './meteor.js';
 import Laser from './laser.js';
 import Diamante from './diamante.js';
+import ShipPart from './shippart.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -41,11 +42,9 @@ export default class Level extends Phaser.Scene {
     this.puntuaciontext = this.add.text(150,10,"Score: " + this.puntuacion).setScale(0.8);
     this.player = new Player(this, 125, 0);
     
-
-    this.fuel;
     this.spaceship = new Spaceship(this,200,160, this.combustible);
     this.createPlatfoms();
-    this.createFuel();
+    this.createshippart();
 
     let meteMeteoro = this.time.addEvent({ delay: this.meteorRatio * 1000, callback: this.createmeteor, callbackScope: this, loop: true });
     let diamante = this.time.addEvent({delay: 10000,callback:this.creatediamond,callbackScope:this,loop:true});
@@ -56,13 +55,13 @@ export default class Level extends Phaser.Scene {
     this.lasergroup = this.add.group();
     this.terrain = this.add.group();
     this.meteorgroup = this.add.group();
-    this.diamantegroup = this.add.group();
+    this.drops = this.add.group();
       
     //creacion de fisicas
     this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
     this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {}, this);
     this.physics.add.collider(this.meteorgroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
-    this.physics.add.collider(this.diamantegroup, this.terrain);
+    this.physics.add.collider(this.drops, this.terrain);
   }
 
   destroyonlythyself(obj1){
@@ -80,13 +79,19 @@ new Meteor(this, meteorX, -10,this.meteorgroup);
 
   creatediamond(){
     let diamondX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-    new Diamante(this, diamondX, 0, this.diamantegroup);
+    new Diamante(this, diamondX, 0, this.drops);
+  }
+
+  createshippart(){
+    let partX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+    let partY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
+    let shipPart = new ShipPart(this,partX,partY,this.drops);
   }
 
 createFuel(){
   let fuelX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
   let fuelY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
-  this.fuel = new Coin(this,fuelX,fuelY, this.terrain.children.entries);
+  let fuel = new Coin(this,fuelX,fuelY, this.terrain.children.entries);
 }
 
   createPlatfoms(){
@@ -102,6 +107,9 @@ createFuel(){
   playergotfuel(){
     this.player.igotfuel();
   }
+  playergotpieza(){
+    this.player.igotpieza();
+  }
 
   playergothit(){
     this.vidas--;
@@ -114,6 +122,15 @@ createFuel(){
       this.spaceship.addfuel();
       this.createFuel();
       this.modscore(+100);
+    }
+  }
+
+  addpieza(){
+    if(this.player.addpieza()){
+      this.spaceship.addpart();
+      if(!this.spaceship.getrepaired())this.createshippart();
+      else this.createFuel();
+      this.modscore(+25);
     }
   }
 
