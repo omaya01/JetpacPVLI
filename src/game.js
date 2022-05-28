@@ -1,4 +1,4 @@
-import Boot from './Boot.js';
+import Boot from './boot.js';
 import Menu from './menus/Menu.js';
 import Level from './level.js';
 import FinalMenu from './menus/finalmenu.js'

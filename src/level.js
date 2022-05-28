@@ -81,6 +81,7 @@ export default class Level extends Phaser.Scene {
   destroythyself(obj1,obj2){
     obj1.destroy();
     obj2.destroy();
+    this.modscore(+25);
     this.sound.play('explosion');
   }
 
