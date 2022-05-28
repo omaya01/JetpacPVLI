@@ -1,6 +1,7 @@
 import Boot from './Boot.js';
-import Menu from './Menu.js';
+import Menu from './menus/Menu.js';
 import Level from './level.js';
+import FinalMenu from './menus/finalmenu.js'
 
 window.onload = ()=>{
 
@@ -13,12 +14,12 @@ window.onload = ()=>{
             autoCenter: Phaser.Scale.Center.CENTER_HORIZONTALLY
         },
         pixelArt: true,
-        scene: [ Boot, Menu , Level],
+        scene: [ Boot, Menu , Level , FinalMenu],
         physics:{
             default: 'arcade',
             arcade:{
                 gravity: {y:400},
-                debug:true
+                debug:false
             }
         }
     };

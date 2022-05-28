@@ -22,6 +22,13 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('explosion','assets/sounds/explosion.wav');
     this.load.audio('win','assets/sounds/win.wav');
     this.load.audio('lose','assets/sounds/lose.wav');
+    this.load.audio('death','assets/sounds/death.wav');
+    this.load.audio('laser','assets/sounds/laser.wav');
+    this.load.audio('impact','assets/sounds/impact.wav');
+    this.load.audio('bubble','assets/sounds/bubble.wav');
+    this.load.audio('hawk','assets/sounds/hawk.wav');
+    this.load.audio('moosh','assets/sounds/moosh.wav');
+    this.load.audio('jet','assets/sounds/jet.wav');
     //// Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'tileset.png');
@@ -39,6 +46,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('easy','facil.png');
     this.load.image('medium','medio.png');
     this.load.image('hard','dificil.png');
+    this.load.image('continue','continue.png');
 
     this.load.spritesheet('playerAnimation','jetpac.png', { frameWidth: 17, frameHeight: 24 });
     this.load.spritesheet('meteorAnimation','meteor.png', { frameWidth: 16, frameHeight: 14 });

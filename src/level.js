@@ -1,11 +1,11 @@
-import Platform from './platform.js';
-import Player from './player.js';
-import Coin from './coin.js';
-import Spaceship from './spaceship.js';
-import Meteor from './meteor.js';
-import Laser from './laser.js';
-import Diamante from './diamante.js';
-import ShipPart from './shippart.js';
+import Platform from './entities/platform.js';
+import Player from './entities/player.js';
+import Coin from './entities/coin.js';
+import Spaceship from './entities/spaceship.js';
+import Meteor from './entities/meteor.js';
+import Laser from './entities/laser.js';
+import Diamante from './entities/diamante.js';
+import ShipPart from './entities/shippart.js';
 import Seta from './aliens/seta.js';
 import Halcon from './aliens/halcon.js';
 import Pompa from './aliens/pompa.js';
@@ -76,6 +76,7 @@ export default class Level extends Phaser.Scene {
 
   destroyonlythyself(obj1){
     obj1.destroy();
+    this.sound.play('impact');
   }
   destroythyself(obj1,obj2){
     obj1.destroy();
@@ -147,6 +148,7 @@ firstY = 120; secondY = 100; thirdY = 50;
   }
 
   playergothit(){
+    this.sound.play('death');
     this.vidas--;
     this.vidastext.text = "Lives: " + this.vidas;
     return this.vidas === 0;
@@ -181,18 +183,19 @@ firstY = 120; secondY = 100; thirdY = 50;
   }
 
   end(victory){
+    this.sound.stopAll();
     if(victory){
       if(this.nivel < 3){
         this.scene.start('level',{nivel:this.nivel+1, combustible:this.combustible+1, aliens: this.alienRatio-1, vidas:this.vidas, puntuacion:this.puntuacion});
       }
       else{
         this.sound.play('win');
-        this.scene.start('menu');
+        this.scene.start('finalmenu',{vic:true,score:this.puntuacion});
       }
     }
     else{
       this.sound.play('lose');
-      this.scene.start('menu');
+      this.scene.start('finalmenu',{vic:false,score:this.puntuacion});
     }
   }
 }

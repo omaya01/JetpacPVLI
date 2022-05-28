@@ -9,6 +9,11 @@ export default class Halcon extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y) {
       super(scene, x, y, 'halcon');
+
+      let aux = Math.floor(Math.random() * (2 - 0)) + 0;
+      if(aux === 0) this.setTint(0xff0000);
+      else this.setTint(0x00ff00);
+
       //Le mete físicas al objeto
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this);
@@ -18,6 +23,8 @@ export default class Halcon extends Phaser.GameObjects.Sprite {
       this.body.velocity.set(160, 0);
       
       this.toroide = false;
+
+      this.scene.sound.play('hawk',{loop:true});
     }
 
     preUpdate(t,dt) {
