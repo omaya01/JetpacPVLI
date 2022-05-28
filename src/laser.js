@@ -8,17 +8,19 @@ export default class Laser extends Phaser.GameObjects.Sprite {
      * @param {number} y Coordenada Y
      */
     constructor(scene, x, y,dir,group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'laser');
       group.add(this);
       this.scene.add.existing(this);
   
       this.scene.physics.add.existing(this);
       
-      this.speedX = 100;
+      this.speedX = 200;
       this.body.velocity.set(this.speedX*dir, 0);
       this.body.setAllowGravity(false);
       
       this.toroide = false;
+
+      this.scene.time.delayedCall(500,this.destroy,[],this);
     }
     
     preUpdate(t,dt) {

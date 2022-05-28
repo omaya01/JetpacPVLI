@@ -25,18 +25,25 @@ export default class Boot extends Phaser.Scene {
     //// Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'tileset.png');
-    //this.load.image('base', 'base.png');
+    this.load.image('meteor', 'meteor_base.png');
     this.load.image('fuel', 'fuel.png');
-    this.load.image('player', 'jetpac.png');
+    this.load.image('laser','laser.png');
+    this.load.image('diamond','diamond.png');
+    this.load.image('player', 'jetpac_base.png');
     this.load.image('spaceship','spaceship.png');
-    //this.load.image('wallpaper','wallpaper.jpg');
-    //this.load.image('gun','gancho.png');
+    this.load.image('shippart','shippart.png');
+    this.load.image('seta', 'seta_base.png');
+    this.load.image('pompa','pompa_base.png');
+    this.load.image('halcon', 'halcon.png');
+
     this.load.image('easy','facil.png');
     this.load.image('medium','medio.png');
     this.load.image('hard','dificil.png');
-    //this.load.image('menuWallpaper','menuWallpaper.jpg');
+
     this.load.spritesheet('playerAnimation','jetpac.png', { frameWidth: 17, frameHeight: 24 });
     this.load.spritesheet('meteorAnimation','meteor.png', { frameWidth: 16, frameHeight: 14 });
+    this.load.spritesheet('setaAnimation','seta.png', { frameWidth: 16, frameHeight: 14 });
+    this.load.spritesheet('pompaAnimation','pompa.png',{ frameWidth: 16, frameHeight: 16 });
   }
 
   /**

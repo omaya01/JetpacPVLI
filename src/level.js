@@ -180,7 +180,7 @@ firstY = 120; secondY = 100; thirdY = 50;
   end(victory){
     if(victory){
       if(this.nivel < 3){
-        this.scene.start('level',{nivel:this.nivel+1, combustible:this.combustible+1, meteoros: 2, vidas:this.vidas, puntuacion:this.puntuacion});
+        this.scene.start('level',{nivel:this.nivel+1, combustible:this.combustible+1, aliens: this.alienRatio-1, vidas:this.vidas, puntuacion:this.puntuacion});
       }
       else{
         this.sound.play('win');

@@ -8,7 +8,7 @@ export default class Pompa extends Phaser.GameObjects.Sprite {
      * @param {number} y Coordenada Y
      */
     constructor(scene, x, y,group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'pompa');
       //Le mete físicas al objeto
       group.add(this);
       this.scene.add.existing(this);
@@ -16,11 +16,23 @@ export default class Pompa extends Phaser.GameObjects.Sprite {
 
       this.body.setAllowGravity(false);
       this.body.setBounce(1,1);
-      this.body.setCircle(15);
+      this.body.setCircle(8);
       
       this.body.velocity.set(75, 75);
       
       this.toroide = false;
+      this.chargeAnimation();
+      this.play('pompawalks');
+    }
+
+    chargeAnimation(){
+      this.playerAnimation=this.anims.create({
+        key: 'pompawalks',
+        frames: this.anims.generateFrameNumbers('pompaAnimation', { frames: [ 0,1 ] }),
+          frameRate: 8 ,
+          repeat: -1,
+        });
+  
     }
 
     preUpdate(t,dt) {

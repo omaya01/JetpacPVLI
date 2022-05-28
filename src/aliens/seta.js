@@ -8,7 +8,7 @@ export default class Seta extends Phaser.GameObjects.Sprite {
      * @param {number} y Coordenada Y
      */
     constructor(scene, x, y,group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'seta');
       //Le mete físicas al objeto
       group.add(this);
       this.scene.add.existing(this);
@@ -17,6 +17,18 @@ export default class Seta extends Phaser.GameObjects.Sprite {
       this.body.velocity.set(25, 0);
       
       this.toroide = false;
+      this.chargeAnimation();
+      this.play('setawalks');
+    }
+
+    chargeAnimation(){
+      this.playerAnimation=this.anims.create({
+        key: 'setawalks',
+        frames: this.anims.generateFrameNumbers('setaAnimation', { frames: [ 0,1 ] }),
+          frameRate: 8 ,
+          repeat: -1,
+        });
+  
     }
 
     preUpdate(t,dt) {

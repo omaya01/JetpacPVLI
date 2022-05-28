@@ -8,7 +8,7 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
      * @param {number} y Coordenada Y
      */
     constructor(scene, x, y,group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'meteor');
       this.scene.add.existing(this);
   
       //Le mete físicas al objeto
@@ -28,7 +28,7 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
     chargeAnimation(){
       this.playerAnimation=this.anims.create({
         key: 'meteorfalls',
-        frames: this.anims.generateFrameNumbers('meteorAnimation', { frames: [ 0,1,2,3 ] }),
+        frames: this.anims.generateFrameNumbers('meteorAnimation', { frames: [ 0,1 ] }),
           frameRate: 8 ,
           repeat: -1,
         });

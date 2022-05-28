@@ -14,7 +14,7 @@
      * @param {number} y coordenada y
      */
     constructor(scene, x, y, group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'shippart');
       group.add(this);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this);

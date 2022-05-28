@@ -12,7 +12,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    */
   constructor(scene, x, y) {
-    super(scene, x, y, '');
+    super(scene, x, y, 'player');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.speed = 150;
@@ -21,6 +21,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.isWalking=false;
     this.chargeAnimation();
     //this.loadSounds();
+
+    this.lasershot = false;
 
     //reset de pos
     this.resetX = x;
@@ -33,7 +35,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.igotted = false;
 
     //pieza
-    this.piezagotted = this.scene.add.image(this.x,this.y-20,'').setVisible(false);
+    this.piezagotted = this.scene.add.image(this.x,this.y-20,'shippart').setVisible(false);
     this.ipgotted = false;
   }
   chargeAnimation(){
@@ -90,8 +92,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.body.setVelocityX(0);
     }
 
-    if(this.space.isDown){
+    if(this.space.isDown && !this.lasershot){
       this.scene.createlaser(this.getLaserDir());
+      this.lasershot = true;
+      this.scene.time.delayedCall(500,this.canshotagain,[],this);
     }
     
 
@@ -109,6 +113,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.fuelgotted.y=this.y-20;
       this.piezagotted.x=this.x;
       this.piezagotted.y=this.y-20;
+  }
+
+  canshotagain(){
+    this.lasershot = false;
   }
   
   createKeys(){

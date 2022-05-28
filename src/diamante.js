@@ -8,7 +8,7 @@ export default class Diamante extends Phaser.GameObjects.Sprite {
      * @param {number} y Coordenada Y
      */
     constructor(scene, x, y,group) {
-      super(scene, x, y, '');
+      super(scene, x, y, 'diamond');
       //Le mete físicas al objeto
       group.add(this);
       this.scene.add.existing(this);

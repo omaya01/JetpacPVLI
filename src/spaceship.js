@@ -22,6 +22,7 @@
 
       this.fuelcharged = 0; this.fuelneeded = fuelneeded;
       this.fueltext = this.scene.add.text(this.x - 10,this.y-40, "").setScale(0.8);
+      this.shipparttext = this.scene.add.text(this.x - 10, this.y-40,this.actualpiezas + "/" + this.piezasneeded).setScale(0.8);
     }
 
     /**
@@ -47,9 +48,11 @@ this.scene.sound.play('drop');
 
     addpart(){
       this.actualpiezas +=1;
+      this.shipparttext.text = this.actualpiezas + "/" + this.piezasneeded;
       if(this.actualpiezas===this.piezasneeded){
         this.repaired=true;
         this.fueltext.text = this.fuelcharged + "/" + this.fuelneeded;
+        this.shipparttext.text = "";
       }
     }
 
