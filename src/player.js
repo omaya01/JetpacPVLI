@@ -19,6 +19,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.jumpSpeed=-50;
     this.createKeys();
     this.isWalking=false;
+    this.isJumping = false;
     this.chargeAnimation();
     //this.loadSounds();
 
@@ -46,31 +47,34 @@ export default class Player extends Phaser.GameObjects.Sprite {
         repeat: -1,
       });
 
+      this.jetpackAnimation=this.anims.create({
+        key: 'playerjetpack',
+        frames: this.anims.generateFrameNumbers('playerAnimation',{frames:[0,1,2,3]}),
+        frameRate: 8 ,
+        repeat: -1,
+      });
+
   }
-  loadSounds(){
-    const soundConfig = {
-      mute: false,
-      volume: 1,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0,
-    };
-    this.jump=this.scene.sound.add("jumpSound",soundConfig);
-  }
+
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
+    let jumping = false;
 
     //movimiento
     if (this.keyW.isDown) {
       console.log()
       this.body.setVelocityY(this.jumpSpeed);
-      //this.jump.play();
+      if(!this.isJumping) {
+        this.play('playerjetpack');
+        this.isJumping = true;
+      }
+      jumping = true;
     }
+    else if(this.isJumping) this.isJumping=false;
+
     if (this.keyA.isDown) {
       this.body.setVelocityX(-this.speed);
-      if(!this.isWalking){
+      if(!this.isWalking && !jumping){
         this.play('playerWalk');
         this.isWalking=true;
       }
@@ -79,7 +83,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     else if (this.keyD.isDown) {
       this.body.setVelocityX(this.speed);
       
-      if(!this.isWalking){
+      if(!this.isWalking && !jumping){
         this.play('playerWalk');
         this.isWalking=true;
       }
@@ -87,8 +91,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
     else {
       this.isWalking=false;
-      this.play('playerWalk')
-      this.stop();
+      if(!jumping){
+        this.play('playerWalk')
+        this.stop();
+      }
       this.body.setVelocityX(0);
     }
 
@@ -147,7 +153,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.y = this.resetY;
     this.invul = true;
 
-    let timeinvul = this.scene.time.addEvent({delay:2000,callback:this.resetinvul(),callbackScope:this});
+    this.scene.time.delayedCall(2000,this.resetinvul,[],this);
   }
 
   resetinvul(){

@@ -80,6 +80,7 @@ export default class Level extends Phaser.Scene {
   destroythyself(obj1,obj2){
     obj1.destroy();
     obj2.destroy();
+    this.sound.play('explosion');
   }
 
   createmeteor(){
@@ -156,6 +157,7 @@ firstY = 120; secondY = 100; thirdY = 50;
       this.spaceship.addfuel();
       this.createFuel();
       this.modscore(+100);
+      this.sound.play('drop');
     }
   }
 
@@ -165,6 +167,7 @@ firstY = 120; secondY = 100; thirdY = 50;
       if(!this.spaceship.getrepaired())this.createshippart();
       else this.createFuel();
       this.modscore(+25);
+      this.sound.play('drop');
     }
   }
 
