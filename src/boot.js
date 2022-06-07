@@ -33,11 +33,15 @@ export default class Boot extends Phaser.Scene {
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'tileset.png');
     this.load.image('meteor', 'meteor_base.png');
+    this.load.image('explosion_base','explosion_base.png');
     this.load.image('fuel', 'fuel.png');
     this.load.image('laser','laser.png');
     this.load.image('diamond','diamond.png');
     this.load.image('player', 'jetpac_base.png');
-    this.load.image('spaceship','spaceship.png');
+    this.load.image('spaceship_base','spaceship_base.png');
+    this.load.image('spaceship1','spaceship_part_1.png');
+    this.load.image('spaceship2','spaceship_part_2.png');
+    this.load.image('spaceship3','spaceship_part_3.png');
     this.load.image('shippart','shippart.png');
     this.load.image('seta', 'seta_base.png');
     this.load.image('pompa','pompa_base.png');
@@ -48,8 +52,10 @@ export default class Boot extends Phaser.Scene {
     this.load.image('hard','dificil.png');
     this.load.image('continue','continue.png');
 
+    this.load.spritesheet('spaceshipAnimation','spaceship_anim.png',{frameWidth:16, frameHeight:63 })
     this.load.spritesheet('playerAnimation','jetpac.png', { frameWidth: 17, frameHeight: 24 });
     this.load.spritesheet('meteorAnimation','meteor.png', { frameWidth: 16, frameHeight: 14 });
+    this.load.spritesheet('explosionAnimation','explosion.png',{frameWidth:24,frameHeight:17});
     this.load.spritesheet('setaAnimation','seta.png', { frameWidth: 16, frameHeight: 14 });
     this.load.spritesheet('pompaAnimation','pompa.png',{ frameWidth: 16, frameHeight: 16 });
   }

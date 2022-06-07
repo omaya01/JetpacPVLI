@@ -155,11 +155,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.y = this.resetY;
     this.invul = true;
 
+    this.setTint(0xed0cbc);
+
     this.scene.time.delayedCall(2000,this.resetinvul,[],this);
   }
 
   resetinvul(){
     this.invul=false;
+    this.clearTint();
   }
 
   getinvul(){

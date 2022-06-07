@@ -9,6 +9,7 @@ import ShipPart from './entities/shippart.js';
 import Seta from './aliens/seta.js';
 import Halcon from './aliens/halcon.js';
 import Pompa from './aliens/pompa.js';
+import Explosion from './entities/explosion.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -47,7 +48,7 @@ export default class Level extends Phaser.Scene {
     this.puntuaciontext = this.add.text(150,10,"Score: " + this.puntuacion).setScale(0.8);
     this.player = new Player(this, 125, 0);
     
-    this.spaceship = new Spaceship(this,200,160, this.combustible);
+    this.spaceship = new Spaceship(this,200,180, this.combustible);
     this.createPlatfoms();
     this.createshippart();
 
@@ -77,6 +78,7 @@ export default class Level extends Phaser.Scene {
   destroyonlythyself(obj1){
     obj1.destroy();
     this.sound.play('impact');
+    let explosion = new Explosion(this,obj1.x,obj1.y);
   }
   destroythyself(obj1,obj2){
     obj1.destroy();
@@ -187,6 +189,7 @@ firstY = 120; secondY = 100; thirdY = 50;
     this.sound.stopAll();
     if(victory){
       if(this.nivel < 3){
+        this.sound.play('win');
         this.scene.start('level',{nivel:this.nivel+1, combustible:this.combustible+1, aliens: this.alienRatio-1, vidas:this.vidas, puntuacion:this.puntuacion});
       }
       else{
@@ -198,6 +201,10 @@ firstY = 120; secondY = 100; thirdY = 50;
       this.sound.play('lose');
       this.scene.start('finalmenu',{vic:false,score:this.puntuacion});
     }
+  }
+
+  removeplayer(){
+    this.player.destroy();
   }
 }
 
