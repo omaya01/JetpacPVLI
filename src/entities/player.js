@@ -9,7 +9,7 @@ export default class Player extends Toroidal {
     this.horizontalSpeed = 150;
     this.verticalSpeed=-50;
     this.isWalking=false;
-    this.isJumping = false;
+    this.inAir = false;
 
     //keys de input
     this.createKeys();
@@ -52,25 +52,24 @@ export default class Player extends Toroidal {
   }
 
   movementFunction(){
-    let jump = false;
+    let jetused = false;
 
     //movimiento vertical
     if (this.keyW.isDown) {
-      console.log()
       this.body.setVelocityY(this.verticalSpeed);
-      if(!this.isJumping) {
+      if(!this.inAir) {
         this.play('playerjetpack');
-        this.isJumping = true;
+        this.inAir = true;
       }
-      jump = true;
+      jetused = true;
       this.scene.sound.play('jet');
     }
-    else if(this.isJumping) this.isJumping=false;
+    else if(this.inAir) this.inAir=false;
 
     //movimiento horizontal
     if (this.keyA.isDown) {
       this.body.setVelocityX(-this.horizontalSpeed);
-      if(!this.isWalking && !jump){
+      if(!this.isWalking && !jetused){
         this.play('playerWalk');
         this.isWalking=true;
       }
@@ -79,7 +78,7 @@ export default class Player extends Toroidal {
     else if (this.keyD.isDown) {
       this.body.setVelocityX(this.horizontalSpeed);
       
-      if(!this.isWalking && !jump){
+      if(!this.isWalking && !jetused){
         this.play('playerWalk');
         this.isWalking=true;
       }
@@ -87,7 +86,7 @@ export default class Player extends Toroidal {
     }
     else {
       this.isWalking=false;
-      if(!jump){
+      if(!jetused){
         this.play('playerWalk')
         this.stop();
       }
