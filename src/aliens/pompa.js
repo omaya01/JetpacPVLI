@@ -13,7 +13,7 @@ export default class Pompa extends Alien {
 
       this.body.setAllowGravity(false);
       this.body.setBounce(1,1);
-      this.body.setCircle(8);
+      this.body.setCircle(8); // no sabría como hacerlo en función del tamaño del sprite
       
       this.body.velocity.set(75, 75);
       this.auxVelX = this.body.velocity.x;
@@ -40,6 +40,6 @@ export default class Pompa extends Alien {
         this.auxVelY=this.body.velocity.y;
       }
 
-       if(this.y <= 0)this.body.velocity.set(this.body.velocity.x, -this.body.velocity.y);
+       if(this.y <= 0)this.body.velocity.set(this.body.velocity.x, -this.body.velocity.y); //rebote con el tope de arriba de la pantalla
     }
   }

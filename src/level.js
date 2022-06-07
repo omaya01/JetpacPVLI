@@ -32,14 +32,12 @@ export default class Level extends Phaser.Scene {
   }
 
   create() {
-    this.canvas = this.sys.game.canvas;
-
     this.creaFisicas();
-    this.vidastext = this.add.text(10,10, "Lives: " + this.vidas).setScale(0.8);
-    this.puntuaciontext = this.add.text(150,10,"Score: " + this.puntuacion).setScale(0.8);
-    this.player = new Player(this, 125, 0, this.groupvacio, 'player');
+    this.vidastext = this.add.text(this.scale.height/16,this.scale.height/16, "Lives: " + this.vidas).setScale(0.8);
+    this.puntuaciontext = this.add.text(this.scale.width/1.7,this.scale.height/16,"Score: " + this.puntuacion).setScale(0.8);
+    this.player = new Player(this, this.scale.width/2, 0, this.groupvacio, 'player');
     
-    this.spaceship = new Spaceship(this,200,180, this.combustible);
+    this.spaceship = new Spaceship(this,this.scale.width/1.25,this.scale.height-8, this.combustible);
     this.createPlatfoms();
     this.createshippart();
 
@@ -80,58 +78,57 @@ export default class Level extends Phaser.Scene {
   }
 
   createmeteor(){
-    let meteorX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+    let meteorX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
 new Meteor(this, meteorX, -10,this.meteorgroup,'meteor');
   }
 
   createaliens(){
     if(this.nivel === 1){
-      let setaX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+      let setaX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
       new Seta(this, setaX, -10,this.aliengroup,'seta');
     }
     else if(this.nivel === 2){
-      let halconX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+      let halconX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
       new Halcon(this,0,halconX,this.groupvacio,'halcon');
     }
     else if(this.nivel === 3){
-      let pompaX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+      let pompaX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
       new Pompa(this,pompaX,1,this.aliengroup,'pompa');
     }
   }
 
   creatediamond(){
-    let diamondX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+    let diamondX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
     new Diamante(this, diamondX, 0, this.drops,'diamond');
   }
 
   createshippart(){
-    let partX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
+    let partX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
     new ShipPart(this,partX,-10,this.drops,'shippart');
   }
 
 createFuel(){
-  let fuelX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-  let fuelY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
-  new Fuel(this,fuelX,fuelY, this.drops,'fuel');
+  let fuelX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
+  new Fuel(this,fuelX,-10, this.drops,'fuel');
 }
 
   createPlatfoms(){
-      new Platform(this,129,188, 20, this.terrain); //suelo
+      new Platform(this,0,this.scale.height, this.scale.height/5, this.terrain); //suelo
 
       //plataformas
       let firstY, secondY, thirdY;
       if(this.nivel === 1){
-firstY = 100; secondY = 50; thirdY = 120;
+firstY = this.scale.height/2; secondY = this.scale.height/3; thirdY = this.scale.height/1.55;
       }
       else if(this.nivel === 2){
-firstY = 50; secondY = 120; thirdY = 100;
+firstY = this.scale.height/3; secondY = this.scale.height/1.55; thirdY = this.scale.height/2;
       }
       else if(this.nivel === 3){
-firstY = 120; secondY = 100; thirdY = 50;
+firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.scale.height/3;
       }
-      new Platform(this,115,firstY,2, this.terrain);
-      new Platform(this,40,secondY,2, this.terrain);
-      new Platform(this,230,thirdY,2, this.terrain);
+      new Platform(this,this.scale.width/2,firstY,2, this.terrain);
+      new Platform(this,this.scale.width/5,secondY,2, this.terrain);
+      new Platform(this,this.scale.width/1.1,thirdY,2, this.terrain);
     
   }
 

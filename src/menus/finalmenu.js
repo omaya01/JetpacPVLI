@@ -16,17 +16,14 @@
         this.score = data.score;
     }
 
-    /**
-     * Crea lo que se ve en el menú: fondo y objetos.
-     */
     preload(){
 
-        if(this.vic) this.add.text(this.scale.width/2-100,this.scale.height-150, "VICTORY!!!!");
-        else this.add.text(this.scale.width/2-100,this.scale.height-150,"DEFEAT!!!!");
+        if(this.vic) this.add.text(this.scale.width/8,this.scale.height/3, "VICTORY!!!!");
+        else this.add.text(this.scale.width/8,this.scale.height/3,"DEFEAT!!!!");
 
-        this.add.text(this.scale.width/2-100,this.scale.height-100,"Final Score:  " + this.score);
+        this.add.text(this.scale.width/8,this.scale.height/2,"Final Score:  " + this.score);
 
-        this.ok=this.add.image(this.scale.width/2,this.scale.height-50,'continue').setInteractive().setScale(0.5);
+        this.ok=this.add.image(this.scale.width/2,this.scale.height/1.3,'continue').setInteractive().setScale(0.5);
         
     }
     create(){

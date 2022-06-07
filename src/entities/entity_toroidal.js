@@ -17,12 +17,12 @@ export default class Toroidal extends Phaser.GameObjects.Sprite {
     }
 
     toroideFunction(){
-        if(!this.toroide && this.x > this.scene.canvas.width + 5){ //añado 5 para que sea un poco menos brusco el cambio de sitio y se note fluido
+        if(!this.toroide && this.x > this.scene.scale.width + 5){ //añado 5 para que sea un poco menos brusco el cambio de sitio y se note fluido
             this.x=-3; // de nuevo es para hacerlo menos brusco
             this.toroide=true;
         }
         else if(!this.toroide && this.x < -5){ //siempre va a ser -5 independientemente del tamaño del canvas
-            this.x=this.scene.canvas.width;
+            this.x=this.scene.scale.width;
             this.toroide=true;
         }
         else if(this.toroide && this.x >= -3) this.toroide=false; // este valor tiene que ser el mismo de salida por el lado izquierdo
