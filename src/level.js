@@ -65,6 +65,7 @@ export default class Level extends Phaser.Scene {
     this.meteorgroup = this.add.group();
     this.drops = this.add.group();
     this.aliengroup = this.add.group();
+    this.groupvacio = this.add.group(); //grupo para los obejtos toroidales que no tengan colisiones
       
     //creacion de fisicas
     this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
@@ -95,15 +96,15 @@ new Meteor(this, meteorX, -10,this.meteorgroup);
   createaliens(){
     if(this.nivel === 1){
       let setaX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-      new Seta(this, setaX, -10,this.aliengroup);
+      new Seta(this, setaX, -10,this.aliengroup,'seta');
     }
     else if(this.nivel === 2){
       let halconX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-      new Halcon(this,0,halconX);
+      new Halcon(this,0,halconX,this.groupvacio,'halcon');
     }
     else if(this.nivel === 3){
       let pompaX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-      new Pompa(this,pompaX,1,this.aliengroup);
+      new Pompa(this,pompaX,1,this.aliengroup,'pompa');
     }
   }
 

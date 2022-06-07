@@ -53,18 +53,18 @@ this.scene.sound.play('drop');
 
     spaceshipfull(){
       this.scene.time.delayedCall(3000,this.endlevel,[],this);
-        this.naveAnimation=this.anims.create({
+      this.naveAnimation=this.anims.create({
           key: 'spaceshipUp',
           frames: this.anims.generateFrameNumbers('spaceshipAnimation', { frames: [ 0,1 ] }),
             frameRate: 8 ,
             repeat: -1,
           });
 
-          this.play('spaceshipUp');
+      this.play('spaceshipUp');
 
-          this.body.velocity.set(0, -50);
+      this.body.velocity.set(0, -50);
 
-          this.scene.removeplayer();
+      this.scene.removeplayer();
     }
 
     endlevel(){this.scene.end(true);}
