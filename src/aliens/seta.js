@@ -1,4 +1,4 @@
-import Alien from "../entities/entity_toroidal.js";
+import Alien from "./alien.js";
 
 export default class Seta extends Alien {
   

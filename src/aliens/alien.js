@@ -14,7 +14,7 @@ export default class Alien extends Toroidal {
         this.alienFunction();
 
          if (this.scene.physics.overlap(this.scene.player, this)) {
-
+             
          if(!this.scene.player.getinvul()){
          if(this.scene.playergothit()) this.scene.end(false);
          else this.scene.player.resetmepos();

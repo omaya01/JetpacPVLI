@@ -11,18 +11,9 @@ import Halcon from './aliens/halcon.js';
 import Pompa from './aliens/pompa.js';
 import Explosion from './entities/explosion.js';
 
-/**
- * Escena principal del juego. La escena se compone de una serie de plataformas 
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
- * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
- * @extends Phaser.Scene
- */
+
 export default class Level extends Phaser.Scene {
-  /**
-   * Constructor de la escena
-   */
+
   constructor() {
     super({ key: 'level' });{
       this.nivel;
@@ -39,14 +30,14 @@ export default class Level extends Phaser.Scene {
     this.vidas = data.vidas;
     this.puntuacion = data.puntuacion;
   }
-  /**
-   * Creación de los elementos de la escena principal de juego
-   */
+
   create() {
+    this.canvas = this.sys.game.canvas;
+
     this.creaFisicas();
     this.vidastext = this.add.text(10,10, "Lives: " + this.vidas).setScale(0.8);
     this.puntuaciontext = this.add.text(150,10,"Score: " + this.puntuacion).setScale(0.8);
-    this.player = new Player(this, 125, 0);
+    this.player = new Player(this, 125, 0, this.groupvacio, 'player');
     
     this.spaceship = new Spaceship(this,200,180, this.combustible);
     this.createPlatfoms();
@@ -90,7 +81,7 @@ export default class Level extends Phaser.Scene {
 
   createmeteor(){
     let meteorX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-new Meteor(this, meteorX, -10,this.meteorgroup);
+new Meteor(this, meteorX, -10,this.meteorgroup,'meteor');
   }
 
   createaliens(){
@@ -178,7 +169,7 @@ firstY = 120; secondY = 100; thirdY = 50;
   }
 
   createlaser(dir){
-    let laser = new Laser(this,this.player.getX(),this.player.getY(),dir,this.lasergroup);
+    let laser = new Laser(this,this.player.getX(),this.player.getY(),this.lasergroup,'laser');
   }
 
   modscore(mod){

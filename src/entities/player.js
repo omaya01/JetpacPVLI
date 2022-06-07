@@ -1,27 +1,15 @@
+import Toroidal from "./entity_toroidal.js";
 
-/**
- * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando wds.
- * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
- */
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Player extends Toroidal {
   
-  /**
-   * Constructor del jugador
-   * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
-   * @param {number} x Coordenada X
-   * @param {number} y Coordenada Y
-   */
-  constructor(scene, x, y) {
-    super(scene, x, y, 'player');
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
+  constructor(scene, x, y, group, sprite) {
+    super(scene, x, y, group,sprite);
     this.speed = 150;
     this.jumpSpeed=-50;
     this.createKeys();
     this.isWalking=false;
     this.isJumping = false;
     this.chargeAnimation();
-    //this.loadSounds();
 
     this.lasershot = false;
 
@@ -32,7 +20,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     //fuel
     this.fuelgotted = this.scene.add.image(this.x, this.y - 20, 'fuel').setVisible(false);
-    this.toroide = false;
     this.igotted = false;
 
     //pieza
@@ -56,8 +43,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   }
 
-  preUpdate(t,dt) {
-    super.preUpdate(t,dt);
+  movementFunction(){
     let jumping = false;
 
     //movimiento
@@ -98,25 +84,20 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
       this.body.setVelocityX(0);
     }
+  }
 
+  updateFunction(){
+    this.movementFunction();
+
+    //disparo
     if(this.space.isDown && !this.lasershot){
       this.scene.createlaser(this.getLaserDir());
       this.scene.sound.play('laser');
       this.lasershot = true;
       this.scene.time.delayedCall(500,this.canshotagain,[],this);
     }
-    
 
-    if(!this.toroide && this.x > 260){
-      this.x=0;
-      this.toroide=true;
-    }
-    else if(!this.toroide && this.x < -5){
-      this.x=250;
-      this.toroide=true;
-    }
-    else if(this.toroide && this.x > 0) this.toroide=false;
-
+    //reposicionamiento de las imagenes invisibles
     this.fuelgotted.x=this.x;
       this.fuelgotted.y=this.y-20;
       this.piezagotted.x=this.x;

@@ -1,21 +1,10 @@
-/**
- * Escena para la precarga de los assets que se usarán en el juego.
- * Esta escena se puede mejorar añadiendo una imagen del juego y una 
- * barra de progreso de carga de los assets
- * @see {@link https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/} como ejemplo
- * sobre cómo hacer una barra de progreso.
- */
+
 export default class Boot extends Phaser.Scene {
-  /**
-   * Constructor de la escena
-   */
+
   constructor() {
     super({ key: 'boot' });
   }
 
-  /**
-   * Carga de los assets del juego
-   */
   preload() {
     this.load.audio('pick','assets/sounds/pick.wav');
     this.load.audio('drop','assets/sounds/drop.wav');
@@ -29,8 +18,9 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('hawk','assets/sounds/hawk.wav');
     this.load.audio('moosh','assets/sounds/moosh.wav');
     this.load.audio('jet','assets/sounds/jet.wav');
-    //// Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
+
     this.load.setPath('assets/sprites/');
+
     this.load.image('platform', 'tileset.png');
     this.load.image('meteor', 'meteor_base.png');
     this.load.image('explosion_base','explosion_base.png');
@@ -60,10 +50,6 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('pompaAnimation','pompa.png',{ frameWidth: 16, frameHeight: 16 });
   }
 
-  /**
-   * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
-   * nivel del juego
-   */
   create() {
     this.scene.start('menu');
   }
