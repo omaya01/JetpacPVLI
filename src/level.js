@@ -1,6 +1,6 @@
 import Platform from './entities/platform.js';
 import Player from './entities/player.js';
-import Coin from './entities/coin.js';
+import Fuel from './entities/fuel.js';
 import Spaceship from './entities/spaceship.js';
 import Meteor from './entities/meteor.js';
 import Laser from './entities/laser.js';
@@ -109,18 +109,18 @@ new Meteor(this, meteorX, -10,this.meteorgroup);
 
   creatediamond(){
     let diamondX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-    new Diamante(this, diamondX, 0, this.drops);
+    new Diamante(this, diamondX, 0, this.drops,'diamond');
   }
 
   createshippart(){
     let partX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
-    new ShipPart(this,partX,-10,this.drops);
+    new ShipPart(this,partX,-10,this.drops,'shippart');
   }
 
 createFuel(){
   let fuelX = Math.floor(Math.random() * (250 - 10 + 1) + 10);
   let fuelY =  Math.floor(Math.random() * (180 - 10 + 1) + 10);
-  new Coin(this,fuelX,fuelY, this.terrain.children.entries);
+  new Fuel(this,fuelX,fuelY, this.drops,'fuel');
 }
 
   createPlatfoms(){

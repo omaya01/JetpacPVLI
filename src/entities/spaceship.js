@@ -47,6 +47,7 @@
 this.scene.sound.play('drop');
       if(this.fuelcharged === this.fuelneeded){
         this.spaceshipfull();
+        this.fueltext.text="";
       }
     }
 
