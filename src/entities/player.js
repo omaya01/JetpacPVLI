@@ -94,7 +94,7 @@ export default class Player extends Toroidal {
 
     //disparo
     if(this.space.isDown && !this.lasershot){
-      this.scene.createlaser(this.getLaserDir());
+      this.scene.createlaser();
       this.scene.sound.play('laser');
       this.lasershot = true;
       this.scene.time.delayedCall(500,this.canshotagain,[],this);
@@ -120,14 +120,14 @@ export default class Player extends Toroidal {
     
   }
 
-  igotfuel(){
+  gotfuel(){
     if(!this.fuelPicked){
       this.fuelImage.setVisible(true);
       this.fuelPicked=true;
     }
   }
 
-  igotpieza(){
+  gotpieza(){
     if(!this.piezaPicked){
       this.piezaImage.setVisible(true);
       this.piezaPicked=true;

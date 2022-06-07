@@ -7,7 +7,7 @@ export default class ShipPart extends Drop {
     }
 
     overlapFunction(){
-      this.scene.playergotpieza();
+      this.scene.player.gotpieza();
       this.scene.sound.play('pick');
       this.destroy();
     }

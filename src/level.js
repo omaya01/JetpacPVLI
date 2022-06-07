@@ -132,13 +132,6 @@ firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.sc
     
   }
 
-  playergotfuel(){
-    this.player.igotfuel();
-  }
-  playergotpieza(){
-    this.player.igotpieza();
-  }
-
   playergothit(){
     this.sound.play('death');
     this.vidas--;
@@ -165,7 +158,7 @@ firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.sc
     }
   }
 
-  createlaser(dir){
+  createlaser(){
     let laser = new Laser(this,this.player.getX(),this.player.getY(),this.lasergroup,'laser');
   }
 

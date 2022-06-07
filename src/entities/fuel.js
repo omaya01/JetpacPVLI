@@ -7,7 +7,7 @@ export default class Fuel extends Drop {
     }
 
     overlapFunction(){
-      this.scene.playergotfuel();
+      this.scene.player.gotfuel();
       this.scene.sound.play('pick');
       this.destroy();
     }
