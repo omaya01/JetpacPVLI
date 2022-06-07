@@ -15,7 +15,7 @@
         this.medium=this.add.image(this.scale.width/2,this.scale.height/2,'medium').setInteractive().setScale(0.5);
         this.hard=this.add.image(this.scale.width/2,this.scale.height/1.3,'hard').setInteractive().setScale(0.5);
     }
-    create(){
+    create(){ //botones de los niveles
         this.easy.on('pointerdown', function (event) { 
             this.scene.start('level',{nivel:1, combustible:1, aliens: 3, vidas:3, puntuacion:0});
           }, this);

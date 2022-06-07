@@ -10,7 +10,7 @@ export default class Alien extends Toroidal {
 
     }
 
-    // checkea overlap con el player
+    // checkea overlap con el player y si tiene invul
     updateFunction(){
         this.alienFunction();
 

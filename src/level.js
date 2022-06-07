@@ -32,15 +32,20 @@ export default class Level extends Phaser.Scene {
   }
 
   create() {
+    //fisicas
     this.creaFisicas();
+
+    //textos
     this.vidastext = this.add.text(this.scale.height/16,this.scale.height/16, "Lives: " + this.vidas).setScale(0.8);
     this.puntuaciontext = this.add.text(this.scale.width/1.7,this.scale.height/16,"Score: " + this.puntuacion).setScale(0.8);
+
+    //entidades
     this.player = new Player(this, this.scale.width/2, 0, this.groupvacio, 'player');
-    
     this.spaceship = new Spaceship(this,this.scale.width/1.25,this.scale.height-8, this.combustible);
     this.createPlatfoms();
     this.createshippart();
 
+    //timers en loop
     let meteMeteoro = this.time.addEvent({ delay: 2000, callback: this.createmeteor, callbackScope: this, loop: true });
     let diamante = this.time.addEvent({delay: 10000,callback:this.creatediamond,callbackScope:this,loop:true});
     let alienspawn = this.time.addEvent({delay:this.alienRatio*1000,callback:this.createaliens,callbackScope:this,loop:true});
@@ -65,7 +70,8 @@ export default class Level extends Phaser.Scene {
     this.physics.add.collider(this.drops, this.terrain);
   }
 
-  destroyonlythyself(obj1){
+  //metodos para callback de fisicas
+  destroyonlythyself(obj1){ 
     obj1.destroy();
     this.sound.play('impact');
     let explosion = new Explosion(this,obj1.x,obj1.y);
@@ -76,13 +82,14 @@ export default class Level extends Phaser.Scene {
     this.modscore(+25);
     this.sound.play('explosion');
   }
+  //
 
-  createmeteor(){
+  //creacion de enemigos
+  createmeteor(){ //meteoros
     let meteorX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
-new Meteor(this, meteorX, -10,this.meteorgroup,'meteor');
+    new Meteor(this, meteorX, -10,this.meteorgroup,'meteor');
   }
-
-  createaliens(){
+  createaliens(){ //aliens dependiendo del nivel
     if(this.nivel === 1){
       let setaX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
       new Seta(this, setaX, -10,this.aliengroup,'seta');
@@ -96,49 +103,62 @@ new Meteor(this, meteorX, -10,this.meteorgroup,'meteor');
       new Pompa(this,pompaX,1,this.aliengroup,'pompa');
     }
   }
+  //
 
+  //creacion de drops
   creatediamond(){
     let diamondX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
     new Diamante(this, diamondX, 0, this.drops,'diamond');
   }
-
   createshippart(){
     let partX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
     new ShipPart(this,partX,-10,this.drops,'shippart');
   }
+  createFuel(){
+    let fuelX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
+    new Fuel(this,fuelX,-10, this.drops,'fuel');
+  }
+  //
 
-createFuel(){
-  let fuelX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
-  new Fuel(this,fuelX,-10, this.drops,'fuel');
-}
-
+  //creacion de plataformas
   createPlatfoms(){
       new Platform(this,0,this.scale.height, this.scale.height/5, this.terrain); //suelo
 
-      //plataformas
+      //dependiendo del nivel las alturas varian de patron
       let firstY, secondY, thirdY;
       if(this.nivel === 1){
-firstY = this.scale.height/2; secondY = this.scale.height/3; thirdY = this.scale.height/1.55;
+      firstY = this.scale.height/2; secondY = this.scale.height/3; thirdY = this.scale.height/1.55;
       }
       else if(this.nivel === 2){
-firstY = this.scale.height/3; secondY = this.scale.height/1.55; thirdY = this.scale.height/2;
+      firstY = this.scale.height/3; secondY = this.scale.height/1.55; thirdY = this.scale.height/2;
       }
       else if(this.nivel === 3){
-firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.scale.height/3;
+      firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.scale.height/3;
       }
+
       new Platform(this,this.scale.width/2,firstY,2, this.terrain);
       new Platform(this,this.scale.width/5,secondY,2, this.terrain);
       new Platform(this,this.scale.width/1.1,thirdY,2, this.terrain);
     
   }
+  //
 
+  //player related
   playergothit(){
     this.sound.play('death');
     this.vidas--;
     this.vidastext.text = "Lives: " + this.vidas;
     return this.vidas === 0;
   }
- 
+  removeplayer(){
+    this.player.destroy();
+  }
+  createlaser(){
+    let laser = new Laser(this,this.player.getX(),this.player.getY(),this.lasergroup,'laser');
+  }
+  //
+
+  //nave related
   chargefuel(){
     if(this.player.chargefuel()){
       this.spaceship.addfuel();
@@ -147,7 +167,6 @@ firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.sc
       this.sound.play('drop');
     }
   }
-
   addpieza(){
     if(this.player.addpieza()){
       this.spaceship.addpart();
@@ -157,17 +176,15 @@ firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.sc
       this.sound.play('drop');
     }
   }
+  //
 
-  createlaser(){
-    let laser = new Laser(this,this.player.getX(),this.player.getY(),this.lasergroup,'laser');
-  }
 
-  modscore(mod){
+  modscore(mod){ //modificacion de la score
     this.puntuacion += mod;
     this.puntuaciontext.text = "Score: " + this.puntuacion;
   }
 
-  end(victory){
+  end(victory){ //paso a la siguiente escena dependiendo de ciertos parametros
     this.sound.stopAll();
     if(victory){
       if(this.nivel < 3){
@@ -185,9 +202,7 @@ firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.sc
     }
   }
 
-  removeplayer(){
-    this.player.destroy();
-  }
+ 
 }
 
 

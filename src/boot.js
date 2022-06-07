@@ -6,6 +6,7 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
+    //audios
     this.load.audio('pick','assets/sounds/pick.wav');
     this.load.audio('drop','assets/sounds/drop.wav');
     this.load.audio('explosion','assets/sounds/explosion.wav');
@@ -18,9 +19,11 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('hawk','assets/sounds/hawk.wav');
     this.load.audio('moosh','assets/sounds/moosh.wav');
     this.load.audio('jet','assets/sounds/jet.wav');
+    //
 
     this.load.setPath('assets/sprites/');
 
+    //imagenes
     this.load.image('platform', 'tileset.png');
     this.load.image('meteor', 'meteor_base.png');
     this.load.image('explosion_base','explosion_base.png');
@@ -41,13 +44,16 @@ export default class Boot extends Phaser.Scene {
     this.load.image('medium','medio.png');
     this.load.image('hard','dificil.png');
     this.load.image('continue','continue.png');
+    //
 
+    //animaciones
     this.load.spritesheet('spaceshipAnimation','spaceship_anim.png',{frameWidth:16, frameHeight:63 })
     this.load.spritesheet('playerAnimation','jetpac.png', { frameWidth: 17, frameHeight: 24 });
     this.load.spritesheet('meteorAnimation','meteor.png', { frameWidth: 16, frameHeight: 14 });
     this.load.spritesheet('explosionAnimation','explosion.png',{frameWidth:24,frameHeight:17});
     this.load.spritesheet('setaAnimation','seta.png', { frameWidth: 16, frameHeight: 14 });
     this.load.spritesheet('pompaAnimation','pompa.png',{ frameWidth: 16, frameHeight: 16 });
+    //
   }
 
   create() {

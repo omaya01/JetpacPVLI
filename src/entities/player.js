@@ -5,15 +5,19 @@ export default class Player extends Toroidal {
   constructor(scene, x, y, group, sprite) {
     super(scene, x, y, group,sprite);
 
+    //velocidades y control de movimiento
     this.horizontalSpeed = 150;
     this.verticalSpeed=-50;
     this.isWalking=false;
     this.isJumping = false;
 
+    //keys de input
     this.createKeys();
     
+    //animaciones
     this.chargeAnimation();
 
+    //control de laser
     this.lasershot = false;
 
     //reset de pos
@@ -29,6 +33,7 @@ export default class Player extends Toroidal {
     this.piezaImage = this.scene.add.image(this.x,this.y-20,'shippart').setVisible(false);
     this.piezaPicked = false;
   }
+
   chargeAnimation(){
     this.playerAnimation=this.anims.create({
       key: 'playerWalk',
@@ -49,7 +54,7 @@ export default class Player extends Toroidal {
   movementFunction(){
     let jump = false;
 
-    //movimiento
+    //movimiento vertical
     if (this.keyW.isDown) {
       console.log()
       this.body.setVelocityY(this.verticalSpeed);
@@ -62,6 +67,7 @@ export default class Player extends Toroidal {
     }
     else if(this.isJumping) this.isJumping=false;
 
+    //movimiento horizontal
     if (this.keyA.isDown) {
       this.body.setVelocityX(-this.horizontalSpeed);
       if(!this.isWalking && !jump){
@@ -90,6 +96,7 @@ export default class Player extends Toroidal {
   }
 
   updateFunction(){
+    //movimiento
     this.movementFunction();
 
     //disparo
@@ -107,7 +114,7 @@ export default class Player extends Toroidal {
       this.piezaImage.y=this.y-20;
   }
 
-  canshotagain(){
+  canshotagain(){ //se usa para un delayed call
     this.lasershot = false;
   }
   
@@ -134,7 +141,7 @@ export default class Player extends Toroidal {
     }
   }
 
-  resetmepos(){
+  resetmepos(){ //resetea posicion y pone invul se llama cuando se recibe daño
     this.x = this.resetX;
     this.y = this.resetY;
     this.invul = true;
@@ -144,7 +151,7 @@ export default class Player extends Toroidal {
     this.scene.time.delayedCall(2000,this.resetinvul,[],this);
   }
 
-  resetinvul(){
+  resetinvul(){ 
     this.invul=false;
     this.clearTint();
   }
@@ -153,7 +160,7 @@ export default class Player extends Toroidal {
     return this.invul;
   }
 
-  chargefuel(){
+  chargefuel(){ //true si está recogido
     if(this.fuelPicked===true){
       this.fuelImage.setVisible(false);
       this.fuelPicked=false;
@@ -162,7 +169,7 @@ export default class Player extends Toroidal {
     else return false;
   }
 
-  addpieza(){
+  addpieza(){ //true si está recogida
     if(this.piezaPicked===true){
       this.piezaImage.setVisible(false);
       this.piezaPicked=false;
@@ -174,7 +181,7 @@ export default class Player extends Toroidal {
   getX(){return this.x;}
   getY(){return this.y;}
 
-  getLaserDir(){
+  getLaserDir(){ //devuelve la dirección a la que se está mirando
     if(this.flipX)return -1;
     else return 1;
   }

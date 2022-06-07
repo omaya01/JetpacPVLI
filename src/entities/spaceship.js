@@ -3,14 +3,17 @@
 
     constructor(scene, x, y, fuelneeded) {
       super(scene, x, y, 'spaceship_base');
+
+      //fisicas
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this);
-
       this.body.setAllowGravity(false);
 
+      //variables de control de fuel y piezas
       this.repaired = false; this.piezasneeded = 3; this.actualpiezas = 0;
-
       this.fuelcharged = 0; this.fuelneeded = fuelneeded;
+
+      //textos
       this.fueltext = this.scene.add.text(this.x - 10,this.y-55, "").setScale(0.8);
       this.shipparttext = this.scene.add.text(this.x - 10, this.y-55,this.actualpiezas + "/" + this.piezasneeded).setScale(0.8);
     }
@@ -33,24 +36,6 @@ this.scene.sound.play('drop');
       }
     }
 
-    spaceshipfull(){
-      this.scene.time.delayedCall(3000,this.endlevel,[],this);
-      this.naveAnimation=this.anims.create({
-          key: 'spaceshipUp',
-          frames: this.anims.generateFrameNumbers('spaceshipAnimation', { frames: [ 0,1 ] }),
-            frameRate: 8 ,
-            repeat: -1,
-          });
-
-      this.play('spaceshipUp');
-
-      this.body.velocity.set(0, -50);
-
-      this.scene.removeplayer();
-    }
-
-    endlevel(){this.scene.end(true);}
-
     addpart(){
       this.actualpiezas +=1;
       this.shipparttext.text = this.actualpiezas + "/" + this.piezasneeded;
@@ -63,7 +48,7 @@ this.scene.sound.play('drop');
      this.buildship();
     }
 
-    buildship(){
+    buildship(){ //cambio de texturas de la nave
       if(this.actualpiezas===1){
         this.setTexture('spaceship1');
         this.setPosition(this.x,this.y-4); //porque la primera textura es solo la mitad (considerando posición)
@@ -82,4 +67,24 @@ this.scene.sound.play('drop');
     }
 
     getrepaired(){return this.repaired;}
+
+    spaceshipfull(){ // en caso de llenarse la nave 
+      this.scene.time.delayedCall(3000,this.endlevel,[],this);
+      this.naveAnimation=this.anims.create({
+          key: 'spaceshipUp',
+          frames: this.anims.generateFrameNumbers('spaceshipAnimation', { frames: [ 0,1 ] }), 
+            frameRate: 8 ,
+            repeat: -1,
+          });
+
+      this.play('spaceshipUp'); //no se playea no se por que
+
+      this.body.velocity.set(0, -50);
+
+      this.scene.removeplayer();
+    }
+
+    endlevel(){this.scene.end(true);} //se usa para una delayed call
+
+   
   }
