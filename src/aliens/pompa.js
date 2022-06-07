@@ -34,7 +34,7 @@ export default class Pompa extends Alien {
     }
 
     alienFunction(){
-      if(this.auxVelX !== this.body.velocity.x || this.auxVelY !== this.body.velocity.y) {
+      if(this.auxVelX !== this.body.velocity.x || this.auxVelY !== this.body.velocity.y) { //sonido y cambio de variables para saber cuando poner el sonido
         this.scene.sound.play('bubble');
         this.auxVelX = this.body.velocity.x;
         this.auxVelY=this.body.velocity.y;

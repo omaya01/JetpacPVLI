@@ -4,11 +4,14 @@ export default class Player extends Toroidal {
   
   constructor(scene, x, y, group, sprite) {
     super(scene, x, y, group,sprite);
-    this.speed = 150;
-    this.jumpSpeed=-50;
-    this.createKeys();
+
+    this.horizontalSpeed = 150;
+    this.verticalSpeed=-50;
     this.isWalking=false;
     this.isJumping = false;
+
+    this.createKeys();
+    
     this.chargeAnimation();
 
     this.lasershot = false;
@@ -19,12 +22,12 @@ export default class Player extends Toroidal {
     this.invul = false;
 
     //fuel
-    this.fuelgotted = this.scene.add.image(this.x, this.y - 20, 'fuel').setVisible(false);
-    this.igotted = false;
+    this.fuelImage = this.scene.add.image(this.x, this.y - 20, 'fuel').setVisible(false);
+    this.fuelPicked = false;
 
     //pieza
-    this.piezagotted = this.scene.add.image(this.x,this.y-20,'shippart').setVisible(false);
-    this.ipgotted = false;
+    this.piezaImage = this.scene.add.image(this.x,this.y-20,'shippart').setVisible(false);
+    this.piezaPicked = false;
   }
   chargeAnimation(){
     this.playerAnimation=this.anims.create({
@@ -44,33 +47,33 @@ export default class Player extends Toroidal {
   }
 
   movementFunction(){
-    let jumping = false;
+    let jump = false;
 
     //movimiento
     if (this.keyW.isDown) {
       console.log()
-      this.body.setVelocityY(this.jumpSpeed);
+      this.body.setVelocityY(this.verticalSpeed);
       if(!this.isJumping) {
         this.play('playerjetpack');
         this.isJumping = true;
       }
-      jumping = true;
+      jump = true;
       this.scene.sound.play('jet');
     }
     else if(this.isJumping) this.isJumping=false;
 
     if (this.keyA.isDown) {
-      this.body.setVelocityX(-this.speed);
-      if(!this.isWalking && !jumping){
+      this.body.setVelocityX(-this.horizontalSpeed);
+      if(!this.isWalking && !jump){
         this.play('playerWalk');
         this.isWalking=true;
       }
       this.flipX=true;
     }
     else if (this.keyD.isDown) {
-      this.body.setVelocityX(this.speed);
+      this.body.setVelocityX(this.horizontalSpeed);
       
-      if(!this.isWalking && !jumping){
+      if(!this.isWalking && !jump){
         this.play('playerWalk');
         this.isWalking=true;
       }
@@ -78,7 +81,7 @@ export default class Player extends Toroidal {
     }
     else {
       this.isWalking=false;
-      if(!jumping){
+      if(!jump){
         this.play('playerWalk')
         this.stop();
       }
@@ -98,10 +101,10 @@ export default class Player extends Toroidal {
     }
 
     //reposicionamiento de las imagenes invisibles
-    this.fuelgotted.x=this.x;
-      this.fuelgotted.y=this.y-20;
-      this.piezagotted.x=this.x;
-      this.piezagotted.y=this.y-20;
+    this.fuelImage.x=this.x;
+      this.fuelImage.y=this.y-20;
+      this.piezaImage.x=this.x;
+      this.piezaImage.y=this.y-20;
   }
 
   canshotagain(){
@@ -118,16 +121,16 @@ export default class Player extends Toroidal {
   }
 
   igotfuel(){
-    if(!this.igotted){
-      this.fuelgotted.setVisible(true);
-      this.igotted=true;
+    if(!this.fuelPicked){
+      this.fuelImage.setVisible(true);
+      this.fuelPicked=true;
     }
   }
 
   igotpieza(){
-    if(!this.ipgotted){
-      this.piezagotted.setVisible(true);
-      this.ipgotted=true;
+    if(!this.piezaPicked){
+      this.piezaImage.setVisible(true);
+      this.piezaPicked=true;
     }
   }
 
@@ -151,18 +154,18 @@ export default class Player extends Toroidal {
   }
 
   chargefuel(){
-    if(this.igotted===true){
-      this.fuelgotted.setVisible(false);
-      this.igotted=false;
+    if(this.fuelPicked===true){
+      this.fuelImage.setVisible(false);
+      this.fuelPicked=false;
       return true;
     }
     else return false;
   }
 
   addpieza(){
-    if(this.ipgotted===true){
-      this.piezagotted.setVisible(false);
-      this.ipgotted=false;
+    if(this.piezaPicked===true){
+      this.piezaImage.setVisible(false);
+      this.piezaPicked=false;
       return true;
     }
     else return false;
