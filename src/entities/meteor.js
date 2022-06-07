@@ -15,11 +15,11 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
       group.add(this);
       this.scene.physics.add.existing(this);
       
-      this.speedX = 100;
-      this.speedY = 10;
-      this.setDirection();
-      this.body.velocity.set(this.speedX*this.direction1, this.speedY);
-      
+      this.speedX = 50;
+      this.speedY = 100;
+      this.body.velocity.set(this.speedX, this.speedY);
+      this.body.setAllowGravity(false);
+
       this.toroide = false;
       this.chargeAnimation();
       this.play('meteorfalls');
@@ -34,14 +34,6 @@ export default class Meteor extends Phaser.GameObjects.Sprite {
         });
   
     }
-
-    setDirection(){
-
-      //Establezco direcciones para que cada pelota vaya hacia un lugar
-      this.direction1 =(Phaser.Math.Between(-10, 10));
-      this.direction1/=10;
-    }
-    
     preUpdate(t,dt) {
       // IMPORTANTE: Si no ponemos esta instrucción y el sprite está animado
       // no se podrá ejecutar la animación del sprite. 
