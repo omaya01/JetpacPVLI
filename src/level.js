@@ -31,7 +31,21 @@ export default class Level extends Phaser.Scene {
     this.puntuacion = data.puntuacion;
   }
 
+  preload(){
+    this.load.image('tile', '../assets/sprites/tileset.png');
+
+    if(this.nivel === 1) this.load.tilemapTiledJSON('map1','../assets/map/nivel1.json');
+    else if(this.nivel===2) this.load.tilemapTiledJSON('map2','../assets/map/nivel2.json');
+    else if(this.nivel===3) this.load.tilemapTiledJSON('map3','../assets/map/nivel3.json');
+  }
+
   create() {
+    //crea mapa
+    let map = this.make.tilemap({key:'map'+this.nivel, tileWidth:8,tileHeight:8});
+    let tileset = map.addTilesetImage('tileset', 'tile');
+    this.layer = map.createLayer('layer1',tileset);
+    map.setCollision([ 1,2,3 ]);
+
     //fisicas
     this.creaFisicas();
 
@@ -41,8 +55,8 @@ export default class Level extends Phaser.Scene {
 
     //entidades
     this.player = new Player(this, this.scale.width/2, 0, this.groupvacio, 'player');
+    this.physics.add.collider(this.player,this.layer); // colisiones entre player y el mapa
     this.spaceship = new Spaceship(this,this.scale.width/1.25,this.scale.height-8, this.combustible);
-    this.createPlatfoms();
     this.createshippart();
 
     //timers en loop
@@ -55,19 +69,18 @@ export default class Level extends Phaser.Scene {
   creaFisicas(){
     //grupos de fisicas
     this.lasergroup = this.add.group();
-    this.terrain = this.add.group();
     this.meteorgroup = this.add.group();
     this.drops = this.add.group();
     this.aliengroup = this.add.group();
     this.groupvacio = this.add.group(); //grupo para los obejtos toroidales que no tengan colisiones
       
     //creacion de fisicas
-    this.physics.add.collider(this.lasergroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
-    this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {}, this);
-    this.physics.add.collider(this.lasergroup, this.aliengroup,this.destroythyself,function name(params){},this);
-    this.physics.add.collider(this.meteorgroup, this.terrain, this.destroyonlythyself, function name(params) {}, this);
-    this.physics.add.collider(this.aliengroup, this.terrain);
-    this.physics.add.collider(this.drops, this.terrain);
+    this.physics.add.collider(this.lasergroup, this.layer, this.destroyonlythyself, function name(params) {return true;}, this);
+    this.physics.add.collider(this.lasergroup, this.meteorgroup, this.destroythyself, function name(params) {return true;}, this);
+    this.physics.add.collider(this.lasergroup, this.aliengroup,this.destroythyself,function name(params){return true;},this);
+    this.physics.add.collider(this.meteorgroup, this.layer, this.destroyonlythyself, function name(params) {return true;},this);
+    this.physics.add.collider(this.aliengroup, this.layer);
+    this.physics.add.collider(this.drops, this.layer);
   }
 
   //metodos para callback de fisicas
@@ -117,29 +130,6 @@ export default class Level extends Phaser.Scene {
   createFuel(){
     let fuelX = Math.floor(Math.random() * (this.scale.width-10 - 10 + 1) + 10);
     new Fuel(this,fuelX,-10, this.drops,'fuel');
-  }
-  //
-
-  //creacion de plataformas
-  createPlatfoms(){
-      new Platform(this,0,this.scale.height, this.scale.height/5, this.terrain); //suelo
-
-      //dependiendo del nivel las alturas varian de patron
-      let firstY, secondY, thirdY;
-      if(this.nivel === 1){
-      firstY = this.scale.height/2; secondY = this.scale.height/3; thirdY = this.scale.height/1.55;
-      }
-      else if(this.nivel === 2){
-      firstY = this.scale.height/3; secondY = this.scale.height/1.55; thirdY = this.scale.height/2;
-      }
-      else if(this.nivel === 3){
-      firstY = this.scale.height/1.55; secondY = this.scale.height/2; thirdY = this.scale.height/3;
-      }
-
-      new Platform(this,this.scale.width/2,firstY,2, this.terrain);
-      new Platform(this,this.scale.width/5,secondY,2, this.terrain);
-      new Platform(this,this.scale.width/1.1,thirdY,2, this.terrain);
-    
   }
   //
 
